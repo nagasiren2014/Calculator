@@ -38,3 +38,13 @@ C:\Users\ntt\OneDrive\C#\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.
 C:\Users\ntt\OneDrive\C#\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.exe.config
 C:\Users\ntt\OneDrive\C#\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.exe
 C:\Users\ntt\OneDrive\C#\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.pdb
+E:\github\Calculator\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.exe.config
+E:\github\Calculator\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.exe
+E:\github\Calculator\Caculator-Form\Caculator-Form\bin\Debug\Caculator-Form.pdb
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.csprojResolveAssemblyReference.cache
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator_Form.Form1.resources
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator_Form.Properties.Resources.resources
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.csproj.GenerateResource.Cache
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.csproj.CoreCompileInputs.cache
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.exe
+E:\github\Calculator\Caculator-Form\Caculator-Form\obj\Debug\Caculator-Form.pdb

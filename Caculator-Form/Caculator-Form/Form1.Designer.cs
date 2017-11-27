@@ -67,7 +67,7 @@
             this.tb.TabIndex = 0;
             this.tb.Text = "0";
             this.tb.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-           
+            this.tb.TextChanged += new System.EventHandler(this.tb_TextChanged);
             // 
             // button1
             // 
@@ -314,7 +314,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
-           
             // 
             // button3
             // 
@@ -386,7 +385,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Caculator";
-           
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

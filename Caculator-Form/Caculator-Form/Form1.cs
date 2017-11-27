@@ -257,66 +257,162 @@ namespace Caculator_Form
 
         }
 
-       
+
+        public int errorChecker(string s)
+        {
+            //dau cach 
+            //dau ngoac
+            //toan tu gan nhau
+            //toan tu o dau
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z'))
+                    return 5;
+                else
+                
+                if (i != s.Length - 1 && s[i] != ' ' && s[i + 1] != ' ')
+                {
+                    //MessageBox.Show("Các toán tử và toán hạng phải cách nhau bởi dấu cách !");
+                    return 1;
+                    
+                }
+                else
+                    if (s[i] != '(' && s[i] != ')' && isNumb(Convert.ToString(s[i])) == 0 && isNumb(Convert.ToString(s[i + 1])) == 0)
+                {
+                    //MessageBox.Show("Hai toán tử không được nằm cạnh nhau !");
+                    return 2;
+                    
+                }
+                else
+                {
+                    int left = 0, right = 0;
+                    for (int k = 0; k < s.Length; k++)
+                    {
+                        
+                        {
+                            if (s[k] == ')' && s[k + 1] == '(')
+                            {
+                                //MessageBox.Show("Vui lòng kiểm tra lại dấu ngoặc !");
+                                return 3;
+
+                            }
+                            else
+                            {
+                                if (s[k] == '(')
+                                    left++;
+                                else
+                                    if (s[k] == ')')
+                                    right++;
+                            }
+                        }
+                    }
+                    if (left != right)
+                    {
+                        //MessageBox.Show("Vui lòng kiểm tra lại dấu ngoặc !");
+                        return 4;
+                        
+                    }
+                }
+            }
+            return 0;
+
+        }
+
 
         private void button18_Click(object sender, EventArgs e)
         {
             label1.Text = "Dạng hậu tố: ";
             string pt = tb.Text;
-            for (int i = 0; i < pt.Length; i++)
+            if (errorChecker(pt) != 0)
             {
-                if (pt[i] == '(' && pt[i + 2] == '-')
+                int x = errorChecker(pt);
+                switch (x)
                 {
-                    int so = int.Parse(Convert.ToString(pt[i + 4]));
-                    IN.Add(Convert.ToString(0 - so));
-                    i = i + 6; // bỏ qua dấu cách và dấu ")" để tới số tiếp theo 
-                }
-                else
-                    if (pt[i] == '(')
-                {
-                    for (int k = 0; pt[k] != ')';k++)
-                    {
-                        if (pt[k] == '%')
-                        {
-                            float numb1 = 0;
-                            float numb2 = 0;//2 so de tinh %( 5 % 50 )
-                            i += 2;
-                            while (pt[i] != ' ')
-                            {
-                                numb1 = numb1 * 10 + float.Parse(Convert.ToString(pt[i]));
-                                i++;
-                            }
-                            i += 3;
-                            while (pt[i] != ' ')
-                            {
-                                numb2 = numb2 * 10 + float.Parse(Convert.ToString(pt[i]));
-                                i++;
-                            }
-                            IN.Add(Convert.ToString(tinhPhanTram(numb1, numb2)));
-                            i += 1;
+                    case 1:
+                        
+                            MessageBox.Show("Các toán tử và toán hạng phải cách nhau bởi dấu cách !");
                             break;
+
+                    case 2:
+                        MessageBox.Show("Hai toán tử không được nằm cạnh nhau !");
+                        break;
+                    case 3:
+                        MessageBox.Show("Vui lòng kiểm tra lại dấu ngoặc !");
+                        break;
+                    case 4:
+                        MessageBox.Show("Vui lòng kiểm tra lại dấu ngoặc !");
+                        break;
+                    case 5:
+                        MessageBox.Show("Vui lòng chỉ nhập số và phép tính !");
+                        break;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < pt.Length; i++)
+                {
+                    if (pt[i] == '(' && pt[i + 2] == '-')
+                    {
+                        int num = 0;
+                        i += 4;
+                        while (pt[i] != ' ')
+                        {
+                            num = num * 10 + int.Parse(Convert.ToString(pt[i]));
+                            i++;
+                        }
+
+                        IN.Add(Convert.ToString(0 - num));
+                        i = i + 2; // bỏ qua dấu cách và dấu ")" để tới số tiếp theo 
+                    }
+                    else
+                        if (pt[i] == '(')
+                    {
+                        for (int k = 0; pt[k] != ')'; k++)
+                        {
+                            if (pt[k] == '%')
+                            {
+                                float numb1 = 0;
+                                float numb2 = 0;//2 so de tinh %( 5 % 50 )
+                                i += 2;
+                                while (pt[i] != ' ')
+                                {
+                                    numb1 = numb1 * 10 + float.Parse(Convert.ToString(pt[i]));
+                                    i++;
+                                }
+                                i += 3;
+                                while (pt[i] != ' ')
+                                {
+                                    numb2 = numb2 * 10 + float.Parse(Convert.ToString(pt[i]));
+                                    i++;
+                                }
+                                IN.Add(Convert.ToString(tinhPhanTram(numb1, numb2)));
+                                i += 1;
+                                break;
+                            }
                         }
                     }
+                    else
+                        IN.Add(Convert.ToString(pt[i]));
                 }
-                else
-                    IN.Add(Convert.ToString(pt[i]));
+
+                IN.Add("\0");
+                hauTo(IN, OUT);
+                for (int j = 0; OUT[j] != "\0"; j++)
+                {
+                    if (OUT[j] == " " && OUT[j + 1] == " ")
+                        OUT.RemoveAt(j);
+                }
+                for (int u = 0; OUT[u] != "\0"; u++)
+                {
+
+                    label1.Text = label1.Text + OUT[u];
+                }
+                kq.Text = calculate(OUT);
+                IN = new List<string>();
+                OUT = new List<string>();
+                phepToan = new char[100];
             }
-            IN.Add("\0");
-            hauTo(IN,OUT);
-            for (int j = 0; OUT[j] != "\0";j++)
-            {
-                if (OUT[j] == " " && OUT[j + 1] == " ")
-                    OUT.RemoveAt(j);
-            }
-            for (int u = 0; OUT[u] != "\0"; u++)
-            {
-                
-                label1.Text = label1.Text + OUT[u];
-            }
-            kq.Text = calculate(OUT);
-            IN = new List<string>();
-             OUT = new List<string>();
-            phepToan = new char[100];
         }
 
         public float tinhPhanTram(float s1, float s2)
@@ -353,6 +449,14 @@ namespace Caculator_Form
                 button18.PerformClick();
         }
 
-        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tb_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
