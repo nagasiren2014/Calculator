@@ -283,7 +283,7 @@ namespace Caculator_Form
 
             for (int i = 0; i < s.Length; i++)
             {
-                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z'))
+                if ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') || (isNumb(Convert.ToString(s[i])) == 0 && (s[i] != '(' && s[i] != ')' && s[i] != ' ' && s[i] != '+' && s[i] != '-' && s[i] != '*' && s[i] != '/' && s[i] != '%')) )
                     return 5;
                 else
 
