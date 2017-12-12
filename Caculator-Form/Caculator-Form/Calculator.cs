@@ -18,7 +18,7 @@ namespace Caculator_Form
             InitializeComponent();
         }
 
-        List<string> IN = new List<string>();
+        List<string> IN = new List<string>();//( - 2 ) * 3 / 6 + 1000 * ( 1 + 2 )
         List<string> OUT = new List<string>();
         char[] phepToan = new char[100];
         int i = 0;
@@ -350,6 +350,22 @@ namespace Caculator_Form
             {
                 
                 string pt = tb.Text;
+                for (int i = 0; i < pt.Length - 1; i++)
+                {
+                    while (pt[i] == ' ' && pt[i + 1] == ' ' || (i != 0 && isNumb(Convert.ToString(pt[i-1])) == 1 && (isNumb(Convert.ToString(pt[i + 1])) == 1) && pt[i] == ' '))
+                    {
+                        pt = pt.Remove(i,1);
+                        i--;
+                    }
+                    if (isNumb(Convert.ToString(pt[i])) == 1 && (isNumb(Convert.ToString(pt[i + 1])) == 0) && pt[i + 1] != ' ' || (isNumb(Convert.ToString(pt[i])) == 0 && (isNumb(Convert.ToString(pt[i + 1])) == 1 && pt[i] != ' ')))
+                    {
+                        pt = pt.Insert(i + 1, " ");
+                    }
+                    else if ((isNumb(Convert.ToString(pt[i])) == 0 && pt[i] != ' ') && ((isNumb(Convert.ToString(pt[i + 1])) == 0) && pt[i + 1] != ' '))
+                    {
+                        pt = pt.Insert(i + 1, " ");
+                    }
+                }
                 if (errorChecker(pt) != 0)
                 {
                     int x = errorChecker(pt);
@@ -381,58 +397,70 @@ namespace Caculator_Form
                 {
                     for (int i = 0; i < pt.Length; i++)
                     {
-
-                        if ((pt[i] == '(' && pt[i + 2] == '-') || (i == 0 && pt[i] == '-' && isNumb(Convert.ToString(pt[i + 2])) == 1))//số âm
+                        if (i == 0 && pt[i] == '-')
                         {
-                            if(i != 0)//nếu số âm không nằm đầu tiên
-                            IN.Add("(");
+                            i = i + 2;
                             int num = 0;
-                            if (i == 0)
-                                i += 2;
-                            else
-                                i += 4;
                             while (pt[i] != ' ')
                             {
-                                num = num * 10 + int.Parse(Convert.ToString(pt[i]));
+                                num = num * 10 + Convert.ToInt32(Convert.ToString(pt[i]));
                                 i++;
                             }
+                            IN.Add(Convert.ToString(0 - num));
+                            IN.Add(" ");
+                        }
+                        else
+                        {
+                            if ((pt[i] == '(' && pt[i + 2] == '-') || (i == 0 && pt[i] == '-' && isNumb(Convert.ToString(pt[i + 2])) == 1))//số âm
+                            {
 
-                            IN.Add(Convert.ToString(0 - num));//xử lý số âm trong ngoặc
+                                IN.Add("(");
+                                int num = 0;
+
+                                i += 4;
+                                while (pt[i] != ' ')
+                                {
+                                    num = num * 10 + int.Parse(Convert.ToString(pt[i]));
+                                    i++;
+                                }
+
+                                IN.Add(Convert.ToString(0 - num));//xử lý số âm trong ngoặc
 
                                 i--;// vòng while ở trên chạy đến dấu cách, nếu làm tiếp nó sẽ bỏ qua dấu cách mà ko add vào => 2 số sát nhau => không tính được
-                        }
-                        else
-                            if (pt[i] == '(' && pt[i + 4] == '%')//phần trăm
-                        {
-                            IN.Add("(");
-                            for (int k = 0; pt[k] != ')'; k++)
+                            }
+                            else
+                                if (pt[i] == '(' && pt[i + 4] == '%')//phần trăm
                             {
-                                if (pt[k] == '%')
+                                IN.Add("(");
+                                for (int k = 0; pt[k] != ')'; k++)
                                 {
-                                    float numb1 = 0;
-                                    float numb2 = 0;//2 so de tinh %( 5 % 50 )
-                                    i += 2;
-                                    while (pt[i] != ' ')
+                                    if (pt[k] == '%')
                                     {
-                                        numb1 = numb1 * 10 + float.Parse(Convert.ToString(pt[i]));
-                                        i++;
-                                    }
-                                    i += 3;
-                                    while (pt[i] != ' ')
-                                    {
-                                        numb2 = numb2 * 10 + float.Parse(Convert.ToString(pt[i]));
-                                        i++;
-                                    }
+                                        float numb1 = 0;
+                                        float numb2 = 0;//2 so de tinh %( 5 % 50 )
+                                        i += 2;
+                                        while (pt[i] != ' ')
+                                        {
+                                            numb1 = numb1 * 10 + float.Parse(Convert.ToString(pt[i]));
+                                            i++;
+                                        }
+                                        i += 3;
+                                        while (pt[i] != ' ')
+                                        {
+                                            numb2 = numb2 * 10 + float.Parse(Convert.ToString(pt[i]));
+                                            i++;
+                                        }
 
-                                    IN.Add(Convert.ToString(tinhPhanTram(numb1, numb2)));
-                                    i += 1;
-                                    break;
+                                        IN.Add(Convert.ToString(tinhPhanTram(numb1, numb2)));
+                                        i += 1;
+                                        break;
+                                    }
                                 }
                             }
+                            else
+                                IN.Add(Convert.ToString(pt[i]));
                         }
-                        else
-                            IN.Add(Convert.ToString(pt[i]));
-                    }
+                    }//
 
                     IN.Add("\0");
                     hauTo(IN, OUT);
@@ -492,13 +520,8 @@ namespace Caculator_Form
 
         }
 
-       
 
-       
 
-      
-
-       
         private void kq_TextChanged(object sender, EventArgs e)
         {
             if(kq.Text != "")
@@ -519,6 +542,11 @@ namespace Caculator_Form
         {
             if (e.KeyChar == 13)
                 MessageBox.Show("sdg");
+        }
+
+        private void tb_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
