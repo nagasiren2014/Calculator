@@ -343,7 +343,7 @@ namespace Caculator_Form
         }
 
 
-        private void button18_Click(object sender, EventArgs e)
+        private void ketqua_Click(object sender, EventArgs e)
         {
             //label1.Text = "Dạng hậu tố: ";
             if (kq.Text == "")
@@ -507,12 +507,18 @@ namespace Caculator_Form
                 tb.Enabled = true;
         }
 
-        private void button19_KeyDown(object sender, KeyEventArgs e)
+        private void Calculator_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                button18.PerformClick();
+                MessageBox.Show("xgbx");
             }
+        }
+
+        private void Calculator_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                MessageBox.Show("sdg");
         }
     }
 }
